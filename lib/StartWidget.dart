@@ -40,16 +40,22 @@ class _StartWidgetState extends State<StartWidget> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        Text("Ismétlés:"),
-                        FloatingActionButton(
-                          onPressed: _decrementRepeat,
-                          child: new Icon(Icons.remove),
-                        ),
-                        Text("$_repeat"),
-                        FloatingActionButton(
-                          onPressed: _incrementRepeat,
-                          child: new Icon(Icons.add),
-                        ),
+                        Text("Ismétlés:", style: TextStyle(fontSize: 20),),
+                        Padding(
+                          padding: EdgeInsets.all(10.0),
+                          child:FloatingActionButton(
+                            onPressed: _decrementRepeat,
+                            child: new Icon(Icons.remove),
+                        ),),
+                        Text("$_repeat", style: TextStyle(fontSize: 20),),
+                        Padding(
+                          padding: EdgeInsets.all(10.0),
+                          child: FloatingActionButton(
+                            onPressed: _incrementRepeat,
+                            child: new Icon(Icons.add),
+                          ),
+                        )
+
                       ],
                     )
                   ],
@@ -61,14 +67,20 @@ class _StartWidgetState extends State<StartWidget> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Center(
-                      child: FlatButton(
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
-                        onPressed: () {
-                          // On pressed event
-                        },
-                        child: Text("Kezdés"),
-                        color: Colors.blue,
-                      ),
+                      child: ButtonTheme(
+                      minWidth: 200,
+                      height: 100,
+                      child:
+                          RaisedButton(
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
+                            onPressed: () {
+                              // On pressed event
+                            },
+                            child: Text("Kezdés",style: TextStyle(fontSize: 20)),
+                            color: Colors.blue,
+                            splashColor: Colors.redAccent,
+                          ),
+                      )
                     )
                   ],
                 ),
