@@ -49,6 +49,20 @@ flutter:
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 
+  assets:
+    - lib/figures/trapAlulEgyBalFentHiany.png
+    - lib/figures/trapAlulGorbLe.png
+    - lib/figures/trapAlulGorbLeBalAlHiany.png
+    - lib/figures/trapBal.png
+    - lib/figures/trapBalEgy.png
+    - lib/figures/trapBalGorbKi.png
+    - lib/figures/trapFent.png
+    - lib/figures/trapJobb.png
+    - lib/figures/trapFentGorbKi.png
+    - lib/figures/trapJobbGorbKi.png
+    - lib/figures/trapLent.png
+    - lib/figures/trapLentBalAlsoHiany.png
+
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 

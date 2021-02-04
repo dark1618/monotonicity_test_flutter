@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'GameWidget.dart';
 
 class StartWidget extends StatefulWidget {
   @override
@@ -27,13 +28,11 @@ class _StartWidgetState extends State<StartWidget> {
         title: Text("Monotonitástűrés-teszt"),
       ),
       body: SafeArea(
-        child:Expanded(
-          flex: 1,
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Expanded(
-                flex: 1,
+                flex: 3,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
@@ -44,6 +43,7 @@ class _StartWidgetState extends State<StartWidget> {
                         Padding(
                           padding: EdgeInsets.all(10.0),
                           child:FloatingActionButton(
+                            heroTag: "button1",
                             onPressed: _decrementRepeat,
                             child: new Icon(Icons.remove),
                         ),),
@@ -51,6 +51,7 @@ class _StartWidgetState extends State<StartWidget> {
                         Padding(
                           padding: EdgeInsets.all(10.0),
                           child: FloatingActionButton(
+                            heroTag: "button2",
                             onPressed: _incrementRepeat,
                             child: new Icon(Icons.add),
                           ),
@@ -62,7 +63,7 @@ class _StartWidgetState extends State<StartWidget> {
                 ),
               ),
               Expanded(
-                flex: 1,
+                flex: 4,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
@@ -73,8 +74,11 @@ class _StartWidgetState extends State<StartWidget> {
                       child:
                           RaisedButton(
                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
-                            onPressed: () {
-                              // On pressed event
+                            onPressed: () { // navigate to game widget
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => GameWidget()),
+                              );
                             },
                             child: Text("Kezdés",style: TextStyle(fontSize: 20)),
                             color: Colors.blue,
@@ -86,7 +90,6 @@ class _StartWidgetState extends State<StartWidget> {
                 ),
               ),
             ],
-          ),
         ),
       ),
     );
