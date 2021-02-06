@@ -26,6 +26,10 @@ class _GameWidgetState extends State<GameWidget> {
   List<String> listOfGeneratedFigures = [];
   List<String> listOfPossibleFigures = [];
 
+  DateTime _start;
+  DateTime _stop;
+
+
   void generateFigures() {
     listOfPossibleFigures = []..addAll(listAllFigures); // we load all figures to the possible list
     int _min = 0; // set minimum value for random
@@ -58,9 +62,35 @@ class _GameWidgetState extends State<GameWidget> {
     return _mainFigurePath;
   }
 
+  DateTime startTimer(){
+    DateTime start = DateTime.now();
+    return start;
+  }
+
+  DateTime stopTimer(){
+    DateTime stop = DateTime.now();
+    return stop;
+  }
+
+  bool gameInProgress = false;
+
+  void Game(){
+    gameInProgress = true;
+    /*
+    do{
+      generateFigures();
+      startTimer();
+
+
+
+
+    } while(gameInProgress);
+    */
+  }
+
 
   Widget build(BuildContext context) {
-    generateFigures();
+    Game();
 
     return Scaffold(
       backgroundColor: Colors.deepOrange[200],
