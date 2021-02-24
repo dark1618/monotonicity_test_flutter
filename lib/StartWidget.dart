@@ -80,7 +80,7 @@ class _StartWidgetState extends State<StartWidget> {
                                 MaterialPageRoute(builder: (context) => GameWidget()),
                               );
                             },
-                            child: Text("Kezdés",style: TextStyle(fontSize: 20)),
+                            child: Text("Játék",style: TextStyle(fontSize: 20)),
                             color: Colors.blue,
                             splashColor: Colors.redAccent,
                           ),

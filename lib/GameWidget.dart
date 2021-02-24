@@ -1,5 +1,6 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'dart:math';
+import 'package:monotonicitytest/Game.dart';
 
 class GameWidget extends StatefulWidget {
   @override
@@ -7,157 +8,155 @@ class GameWidget extends StatefulWidget {
 }
 
 class _GameWidgetState extends State<GameWidget> {
-  Random rnd;
-  List<String> listAllFigures = [
-        "lib/figures/trapAlulEgyBalFentHiany.png",
-        "lib/figures/trapAlulGorbLe.png",
-        "lib/figures/trapAlulGorbLeBalAlHiany.png",
-        "lib/figures/trapBal.png",
-        "lib/figures/trapBalEgy.png",
-        "lib/figures/trapBalGorbKi.png",
-        "lib/figures/trapFent.png",
-        "lib/figures/trapJobb.png",
-        "lib/figures/trapFentGorbKi.png",
-        "lib/figures/trapJobbGorbKi.png",
-        "lib/figures/trapLent.png",
-        "lib/figures/trapLentBalAlsoHiany.png"
-  ];
 
   List<String> listOfGeneratedFigures = [];
   List<String> listOfPossibleFigures = [];
+  String figure1;
+  String figure2;
+  String figure3;
+  String figure4;
+  String figure5;
+  String figureMain;
+  Image fig1 = Image.asset("lib/figures/trapJobb.png");
+  Image fig2 = Image.asset("lib/figures/trapJobb.png");
+  Image fig3 = Image.asset("lib/figures/trapJobb.png");
+  Image fig4 = Image.asset("lib/figures/trapJobb.png");
+  Image fig5 = Image.asset("lib/figures/trapJobb.png");
+  Image figMain = Image.asset("lib/figures/trapJobb.png");
+  bool _blurWidgetVisible = true;
 
-  DateTime _start;
-  DateTime _stop;
-
-
-  void generateFigures() {
-    listOfPossibleFigures = []..addAll(listAllFigures); // we load all figures to the possible list
-    int _min = 0; // set minimum value for random
-    String _figureName;
-    int _max;
-    rnd = new Random(); // create random
-    for(int i = 5; i>0; i--){
-      _max = listOfPossibleFigures.length-1; // set max value for random (after each iteration, as list is shrinking)
-      int _r = _min + rnd.nextInt(_max-_min); // generate a random number between values
-      _figureName = listOfPossibleFigures[_r].toString(); // get filename of generated figure
-      listOfGeneratedFigures.add(_figureName); // add generated figure to the list of generated
-      listOfPossibleFigures.removeAt(_r);  // remove generated figure from possible figures to avoid duplicates
-    }
+  @override
+  void initState() {
+    super.initState();
+    //GamePlay();
   }
 
-  String populateFigurePositions() {
-    String _figurePath;
-    _figurePath = listOfGeneratedFigures[0].toString(); // read first figure path
-    listOfGeneratedFigures.removeAt(0); // remove the read figure path to avoid duplicates
-    return _figurePath;
+  void GamePlay() {
+    Game game = new Game();
+    game.generateFigures();
+    listOfGeneratedFigures = game.listOfGeneratedFigures;
+    figure1 = game.populateFigurePosition();
+    fig1 = Image.asset(figure1);
+    figure2 = game.populateFigurePosition();
+    fig2 = Image.asset(figure2);
+    figure3 = game.populateFigurePosition();
+    fig3 = Image.asset(figure3);
+    figure4 = game.populateFigurePosition();
+    fig4 = Image.asset(figure4);
+    figure5 = game.populateFigurePosition();
+    fig5 = Image.asset(figure5);
+    figureMain = game.generateTheMainFigure();
+    figMain = Image.asset(figureMain);
   }
 
-  String generateTheMainFigure() { // generate the main figure which is compared
-    String _mainFigurePath;
-    rnd = new Random();
-    int _min = 0;
-    int _max = listAllFigures.length-1;
-    int _r = _min + rnd.nextInt(_max-_min);
-    _mainFigurePath = listAllFigures[_r].toString();
-    return _mainFigurePath;
+  Widget _StartButtonWithBlur()
+  {
+    return Visibility(
+        visible: _blurWidgetVisible,
+        child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+            child: Dialog(
+              //shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
+              backgroundColor: Colors.transparent,
+              child: Container(
+                width: 100.0,
+                height: 100.0,
+                child: FloatingActionButton(
+                  backgroundColor: Colors.blue,
+                  foregroundColor: Colors.black,
+                  onPressed: () {
+                    setState(() {
+                      _blurWidgetVisible = false;
+                      GamePlay();
+                    });
+                  },
+                  child: Text("Kezdés", style: TextStyle(fontSize: 18)),
+                )
+              )
+            )
+        )
+    );
   }
-
-  DateTime startTimer(){
-    DateTime start = DateTime.now();
-    return start;
-  }
-
-  DateTime stopTimer(){
-    DateTime stop = DateTime.now();
-    return stop;
-  }
-
-  bool gameInProgress = false;
-
-  void Game(){
-    gameInProgress = true;
-    /*
-    do{
-      generateFigures();
-      startTimer();
-
-
-
-
-    } while(gameInProgress);
-    */
-  }
-
 
   Widget build(BuildContext context) {
-    Game();
-
-    return Scaffold(
-      backgroundColor: Colors.deepOrange[200],
-      body: SafeArea(
-        child: Column(
-          children: <Widget>[
-            Expanded(
-              flex: 10,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Padding(padding: EdgeInsets.only(left: 10.0), child: Image.asset(populateFigurePositions()),),
-                  Padding(padding: EdgeInsets.only(left: 10.0), child: Image.asset(populateFigurePositions()),),
-                  Padding(padding: EdgeInsets.only(left: 10.0), child: Image.asset(populateFigurePositions()),),
-                  Padding(padding: EdgeInsets.only(left: 10.0), child: Image.asset(populateFigurePositions()),),
-                  Padding(padding: EdgeInsets.only(left: 10.0), child: Image.asset(populateFigurePositions()),),
-                  // dynamic content
-                ],
-              ),
-            ),
-            Expanded(
-              flex: 13,
-              child:
-                Padding(
-                  padding: EdgeInsets.only(top: 15.0),
+    return Stack(
+      children: [
+        Scaffold(
+        backgroundColor: Colors.deepOrange[200],
+          body: SafeArea(
+            child: Column(
+              children: <Widget>[
+                Expanded(
+                  flex: 10,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      Image.asset(generateTheMainFigure())
+                      Padding(padding: EdgeInsets.only(left: 10.0), child: fig1,),
+                      Padding(padding: EdgeInsets.only(left: 10.0), child: fig2,),
+                      Padding(padding: EdgeInsets.only(left: 10.0), child: fig3,),
+                      Padding(padding: EdgeInsets.only(left: 10.0), child: fig4,),
+                      Padding(padding: EdgeInsets.only(left: 10.0), child: fig5,),
+                      // dynamic content
                     ],
                   ),
                 ),
+                Expanded(
+                  flex: 13,
+                  child:
+                  Padding(
+                    padding: EdgeInsets.only(top: 15.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        //Image.asset(figureMain)
+                        figMain
+                      ],
+                    ),
+                  ),
+                ),
+                Expanded(
+                  flex: 8,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: <Widget>[
+                      ButtonTheme(
+                        height: 90,
+                        minWidth: 120,
+                        child: RaisedButton(
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
+                            onPressed: () {
+                              // figure cannot be found
+                              setState(() {
+                                GamePlay();
+                              });
+                            },
+                            child: Text("Nincs", style: TextStyle(fontSize: 20),),
+                            color: Colors.red[300]
+                        ),
+                      ),
+                      ButtonTheme(
+                        height: 90,
+                        minWidth: 120,
+                        child: RaisedButton(
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
+                            onPressed: () {
+                              // figure can be found
+                              setState(() {
+                                GamePlay();
+                              });
+                            },
+                            child: Text("Van", style: TextStyle(fontSize: 20),),
+                            color: Colors.green[300]
+                        ),
+                      ),
+                    ],
+                  ),),
+              ],
             ),
-            Expanded(
-                flex: 8,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: <Widget>[
-                    ButtonTheme(
-                      height: 90,
-                      minWidth: 120,
-                      child: RaisedButton(
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
-                          onPressed: () {
-                            // figure not found
-                          },
-                          child: Text("Nincs", style: TextStyle(fontSize: 20),),
-                          color: Colors.red[300]
-                      ),
-                    ),
-                    ButtonTheme(
-                      height: 90,
-                      minWidth: 120,
-                      child: RaisedButton(
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
-                          onPressed: () {
-                            // figure can be found
-                          },
-                          child: Text("Van", style: TextStyle(fontSize: 20),),
-                          color: Colors.green[300]
-                      ),
-                    ),
-                  ],
-            ),),
-          ],
+          ),
         ),
-      ),
+        _StartButtonWithBlur(),
+      ],
     );
   }
 }
