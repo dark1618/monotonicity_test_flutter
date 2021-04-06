@@ -23,6 +23,11 @@ class Game {
   DateTime _start;
   DateTime _stop;
 
+  int repeatCounter = 0;
+  int correctCounter = 0;
+  int incorrectCounter = 0;
+  int playedGameCounter = 0;
+
 
   void generateFigures() {
     listOfPossibleFigures = []..addAll(listAllFigures); // we load all figures to the possible list
@@ -82,4 +87,15 @@ class Game {
     } while(gameInProgress);
     */
   }
+
+  void foundButtonEvent() {
+    // figure can be found
+
+  }
+
+  void notFoundButtonEvent() {
+    // figure cannot be found
+
+  }
+
 }
